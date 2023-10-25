@@ -1,4 +1,4 @@
-@file:Suppress("RedundantExplicitType")
+@file:Suppress("RedundantExplicitType", "UNUSED_VARIABLE")
 
 package ru.kotlin.homework
 
@@ -6,8 +6,8 @@ fun main() {
     val str: String = "Some string"
     val obj: Any = str
 
-    val strArray: Array<String> = arrayOf(str)
-    val objArray: Array<Any> = strArray
+    val strList: List<String> = listOf(str)
+    val objList: List<Any> = strList
 
-    println("String as object: $obj")
+    println("List of objects: $objList")
 }
