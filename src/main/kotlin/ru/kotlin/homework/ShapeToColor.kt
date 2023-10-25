@@ -33,3 +33,7 @@ class NewColors : ShapeToColor() {
         else -> super.process(shape)
     }
 }
+
+class AllInRed : ShapeToColor() {
+    override fun process(shape: Shape): Color = Red
+}
