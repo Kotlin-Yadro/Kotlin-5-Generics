@@ -9,3 +9,10 @@ open class ShapeToColor {
         else -> throw IllegalArgumentException("Unknown shape")
     }
 }
+
+class CircleToColor : ShapeToColor() {
+    override fun process(shape: Shape): Color = when(shape) {
+        is Circle -> Blue
+        else -> throw IllegalArgumentException("Unknown shape")
+    }
+}
