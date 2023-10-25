@@ -1,13 +1,18 @@
-@file:Suppress("RedundantExplicitType", "UNUSED_VARIABLE")
+@file:Suppress("RedundantExplicitType")
 
 package ru.kotlin.homework
 
+import java.lang.IllegalArgumentException
+
+private val matcher: ShapeToColor = ShapeToColor()
+
 fun main() {
-    val str: String = "Some string"
-    val obj: Any = str
+    println("Square: ${process(Square)}")
+    println("Circle: ${process(Circle)}")
+}
 
-    val strList: List<String> = listOf(str)
-    val objList: List<Any> = strList
-
-    println("List of objects: $objList")
+fun process(shape: Shape) = when(matcher.process(shape)) {
+    Red -> "Красный"
+    Blue -> "Голубой"
+    else -> throw IllegalArgumentException("Неизвестный цвет")
 }
