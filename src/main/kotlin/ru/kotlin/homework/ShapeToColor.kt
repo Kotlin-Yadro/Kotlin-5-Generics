@@ -25,3 +25,11 @@ class NewShapeToColor : ShapeToColor() {
         else -> super.process(shape)
     }
 }
+
+class NewColors : ShapeToColor() {
+    override fun process(shape: Shape): Color = when(shape) {
+        is Triangle -> Blue
+        is Square -> Green
+        else -> super.process(shape)
+    }
+}

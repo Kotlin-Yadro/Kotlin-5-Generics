@@ -4,7 +4,7 @@ package ru.kotlin.homework
 
 import java.lang.IllegalArgumentException
 
-private val matcher: ShapeToColor = NewShapeToColor()
+private val matcher: ShapeToColor = NewColors()
 
 fun main() {
     println("Square: ${process(Square)}")

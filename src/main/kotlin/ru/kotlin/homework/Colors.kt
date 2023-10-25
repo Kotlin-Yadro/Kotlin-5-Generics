@@ -4,3 +4,4 @@ abstract class Color
 
 data object Red : Color()
 data object Blue : Color()
+data object Green : Color()
