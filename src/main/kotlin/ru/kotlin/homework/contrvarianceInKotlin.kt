@@ -1,8 +1,11 @@
 package ru.kotlin.homework
 
 fun main() {
-    val processor: ToExtendCircle = ToExtendCircle()
+    val processor: ToExtendCircle = ToExtendShape()
     processor.process(Circle)
+
+    val shapeProcessor: ToExtendShape = processor as ToExtendShape
+    shapeProcessor.process(Square)
 }
 
 open class ToExtendCircle {
@@ -11,8 +14,9 @@ open class ToExtendCircle {
     }
 }
 
-class ToExtendAny : ToExtendCircle() {
-    override fun process(value: Shape) {
-
+class ToExtendShape : ToExtendCircle() {
+    fun process(value: Shape) = when(value) {
+        is Circle -> super.process(value)
+        else -> println("Any: $value")
     }
 }
