@@ -7,17 +7,21 @@ fun main() {
     val fromGroup = circleGroup.fetch()
     println("From group: $fromGroup")
 
-    val shapeGroup: Group<Shape> = circleGroup
-    val fromShapeGroup: Shape = shapeGroup.fetch()
-    println("From shape group: $fromShapeGroup")
+    val readGroup: ReadGroup<Shape> = circleGroup
+    val fromReadGroup: Shape = readGroup.fetch()
+    println("From read group: $fromReadGroup")
 }
 
-open class Group<T> {
+interface ReadGroup<out T> {
+    fun fetch(): T
+}
+
+open class Group<T> : ReadGroup<T> {
     private val items: MutableList<T> = mutableListOf()
     fun insert(item: T) {
         items.add(item)
     }
-    fun fetch(): T {
+    override fun fetch(): T {
         return items.last()
     }
 }
