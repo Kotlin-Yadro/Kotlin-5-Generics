@@ -6,6 +6,10 @@ fun main() {
     circleGroup.insert(Circle)
     val fromGroup = circleGroup.fetch()
     println("From group: $fromGroup")
+
+    val shapeGroup: Group<Shape> = circleGroup
+    val fromShapeGroup: Shape = shapeGroup.fetch()
+    println("From shape group: $fromShapeGroup")
 }
 
 open class Group<T> {
