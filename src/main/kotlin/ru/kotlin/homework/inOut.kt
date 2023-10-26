@@ -21,10 +21,17 @@ fun main() {
 
     val fromShapeGroup: Shape = shapeGroup.fetch()
     println("From shape group: $fromShapeGroup")
+
+    println(measure(circleGroup))
+    println(measure(readGroup))
+    println(measure(shapeGroup))
 }
 
 open class Group<T> {
     private val items: MutableList<T> = mutableListOf()
+
+    fun getSize(): Int = items.size
+
     fun insert(item: T) {
         items.add(item)
     }
@@ -39,4 +46,7 @@ fun fetcher(group: Group<out Shape>) {
 }
 fun putter(group: Group<in Circle>, item: Circle) {
     group.insert(item)
+}
+fun measure(group: Group<*>) {
+    println("Size of group: ${group.getSize()}")
 }
