@@ -22,9 +22,12 @@ fun main() {
     val fromShapeGroup: Shape = shapeGroup.fetch()
     println("From shape group: $fromShapeGroup")
 
-    println(measure(circleGroup))
-    println(measure(readGroup))
-    println(measure(shapeGroup))
+    var anyGroup: Group<*> = circleGroup
+    println(measure(anyGroup))
+    anyGroup = readGroup
+    println(measure(anyGroup))
+    anyGroup = shapeGroup
+    println(measure(anyGroup))
 }
 
 open class Group<T> {
