@@ -28,6 +28,8 @@ fun main() {
     println(measure(anyGroup))
     anyGroup = shapeGroup
     println(measure(anyGroup))
+
+    idOfFetched(anyGroup)
 }
 
 open class Group<T> {
@@ -52,4 +54,8 @@ fun putter(group: Group<in Circle>, item: Circle) {
 }
 fun measure(group: Group<*>) {
     println("Size of group: ${group.getSize()}")
+}
+fun idOfFetched(group: Group<*>) {
+    val fetched: Any? = group.fetch()
+    println("No ID on fetched")
 }

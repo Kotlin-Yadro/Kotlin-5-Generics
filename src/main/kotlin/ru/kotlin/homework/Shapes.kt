@@ -1,6 +1,10 @@
 package ru.kotlin.homework
 
-abstract class Shape
+import kotlin.random.Random
+
+abstract class Shape {
+    val id: Int = Random.nextInt()
+}
 
 data object Square: Shape()
 data object Circle: Shape()
