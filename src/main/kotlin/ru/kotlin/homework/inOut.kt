@@ -32,7 +32,7 @@ fun main() {
     idOfFetched(anyGroup)
 }
 
-open class Group<T> {
+open class Group<T : Shape> {
     private val items: MutableList<T> = mutableListOf()
 
     fun getSize(): Int = items.size
@@ -56,6 +56,6 @@ fun measure(group: Group<*>) {
     println("Size of group: ${group.getSize()}")
 }
 fun idOfFetched(group: Group<*>) {
-    val fetched: Any? = group.fetch()
-    println("No ID on fetched")
+    val fetched: Shape = group.fetch()
+    println("Id of fetched: ${fetched.id}")
 }
