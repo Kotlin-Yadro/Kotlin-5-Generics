@@ -10,12 +10,14 @@ fun main() {
     val readGroup: Group<out Shape> = circleGroup
     val fromReadGroup: Shape = readGroup.fetch()
     println("From read group: $fromReadGroup")
+    fetcher(circleGroup)
 
     val shapeGroup = Group<Shape>()
     val writeCircleGroup: Group<in Circle> = shapeGroup
     writeCircleGroup.insert(Circle)
     val writeTriangleGroup: Group<in Triangle> = shapeGroup
     writeTriangleGroup.insert(Triangle)
+    putter(shapeGroup, Circle)
 
     val fromShapeGroup: Shape = shapeGroup.fetch()
     println("From shape group: $fromShapeGroup")
@@ -29,4 +31,12 @@ open class Group<T> {
     fun fetch(): T {
         return items.last()
     }
+}
+
+fun fetcher(group: Group<out Shape>) {
+    val fetched = group.fetch()
+    println(fetched)
+}
+fun putter(group: Group<in Circle>, item: Circle) {
+    group.insert(item)
 }
