@@ -24,3 +24,10 @@
 - `processApiErrors` принимает `ErrorLogger<ApiException>`
 
 Приступайте ко второму заданию только после окончания работы над первым!
+
+### Задание 3 (со звездочкой)
+Сделайте так, чтобы [NetworkLogger](src/main/kotlin/ru/kotlin/homework/network/NetworkLogger.kt) имел возможность выдать список
+накопленных ошибок. Настройте типы таким образом, чтобы при сохранении условий заданий 1 и 2, в классе появилась функция:
+```kotlin
+fun dump(): List<Pair<LocalDateTime, E>>
+```
