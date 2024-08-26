@@ -8,6 +8,7 @@ fun main() {
     val nStrValue: String? = nStrBox.getValue()
 }
 
-class Box<T>(private val value: T) {
+class Box<T : CharSequence?>(private val value: T) {
     fun getValue(): T = value
+    fun getLength(): Int = value?.length ?: 0
 }
