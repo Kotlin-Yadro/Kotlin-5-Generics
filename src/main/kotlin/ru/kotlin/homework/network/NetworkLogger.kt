@@ -14,18 +14,21 @@ sealed class ApiException(message: String) : Throwable(message) {
     data object NetworkException : ApiException("Not connected")
     data object UnknownException: ApiException("Unknown exception")
 }
-
-class ErrorLogger<E : Throwable> {
+interface WriteErrorToLogger <in E : Throwable> {
+    fun log (response: NetworkResponse<*, E>)
+    fun dumpLog()
+}
+class ErrorLogger<E : Throwable> : WriteErrorToLogger<E>{
 
     val errors = mutableListOf<Pair<LocalDateTime, E>>()
 
-    fun log(response: NetworkResponse<*, E>) {
+    override fun log(response: NetworkResponse<*, E>) {
         if (response is Failure) {
             errors.add(response.responseDateTime to response.error)
         }
     }
 
-    fun dumpLog() {
+    override fun dumpLog() {
         errors.forEach { (date, error) ->
             println("Error at $date: ${error.message}")
         }
@@ -42,7 +45,7 @@ fun processThrowables(logger: ErrorLogger<Throwable>) {
     logger.dumpLog()
 }
 
-fun processApiErrors(apiExceptionLogger: ErrorLogger<ApiException>) {
+fun processApiErrors(apiExceptionLogger: WriteErrorToLogger<ApiException>) {
     apiExceptionLogger.log(Success("Success"))
     Thread.sleep(100)
     apiExceptionLogger.log(Success(Circle))
@@ -59,6 +62,7 @@ fun main() {
     processThrowables(logger)
 
     println("Processing Api:")
-    processApiErrors(logger)
+    val apiloger: WriteErrorToLogger<ApiException> = logger
+    processApiErrors(apiloger)
 }
 
