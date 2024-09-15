@@ -5,6 +5,7 @@ package ru.kotlin.homework.network
 import ru.kotlin.homework.Circle
 import java.lang.IllegalArgumentException
 import java.time.LocalDateTime
+import kotlin.streams.asSequence
 
 /**
  * Известный вам список ошибок
@@ -17,7 +18,7 @@ sealed class ApiException(message: String) : Throwable(message) {
 
 class ErrorLogger<E : Throwable> {
 
-    val errors = mutableListOf<Pair<LocalDateTime, E>>()
+    private val errors = mutableListOf<Pair<LocalDateTime, E>>()
 
     fun log(response: NetworkResponse<*, E>) {
         if (response is Failure) {
@@ -30,24 +31,28 @@ class ErrorLogger<E : Throwable> {
             println("Error at $date: ${error.message}")
         }
     }
+
+    fun dump(): List<Pair<LocalDateTime, E>> {
+        return errors
+    }
 }
 
-fun processThrowables(logger: ErrorLogger<Throwable>) {
+fun processThrowables(logger: ErrorLogger<in Throwable>) {
     logger.log(Success("Success"))
     Thread.sleep(100)
     logger.log(Success(Circle))
     Thread.sleep(100)
-    logger.log(Failure(IllegalArgumentException("Something unexpected")))
+    logger.log(Failure<Nothing, Throwable>(IllegalArgumentException("Something unexpected")))
 
     logger.dumpLog()
 }
 
-fun processApiErrors(apiExceptionLogger: ErrorLogger<ApiException>) {
+fun processApiErrors(apiExceptionLogger: ErrorLogger<in ApiException>) {
     apiExceptionLogger.log(Success("Success"))
     Thread.sleep(100)
     apiExceptionLogger.log(Success(Circle))
     Thread.sleep(100)
-    apiExceptionLogger.log(Failure(ApiException.NetworkException))
+    apiExceptionLogger.log(Failure<Nothing, ApiException>(ApiException.NetworkException))
 
     apiExceptionLogger.dumpLog()
 }
@@ -61,4 +66,3 @@ fun main() {
     println("Processing Api:")
     processApiErrors(logger)
 }
-
