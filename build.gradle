@@ -1,10 +1,14 @@
 plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.9.10'
+    id 'application'
 }
 
 test {
     useJUnitPlatform()
 }
+
+
+mainClassName = 'ru.kotlin.homework.network.NetworkLoggerKt'
 
 group 'ru.otus'
 version '1.0-SNAPSHOT'
