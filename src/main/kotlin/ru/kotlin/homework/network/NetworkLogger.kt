@@ -15,9 +15,9 @@ sealed class ApiException(message: String) : Throwable(message) {
     data object UnknownException: ApiException("Unknown exception")
 }
 
-class ErrorLogger< in E : Throwable> {
+class ErrorLogger<E : Throwable> {
 
-    val errors: MutableList<Pair<LocalDateTime, @UnsafeVariance E>> = mutableListOf()
+    private val errors: MutableList<Pair<LocalDateTime, E>> = mutableListOf()
 
     fun log(response: NetworkResponse<*, E>) {
         if (response is Failure) {
@@ -31,7 +31,7 @@ class ErrorLogger< in E : Throwable> {
         }
     }
 
-    fun dump(): List<Pair<LocalDateTime, @UnsafeVariance E>> {
+    fun dump(): List<Pair<LocalDateTime, E>> {
         return errors
     }
 }
@@ -42,11 +42,13 @@ fun processThrowables(logger: ErrorLogger<Throwable>) {
     logger.log(Success(Circle))
     Thread.sleep(100)
     logger.log(Failure(IllegalArgumentException("Something unexpected")))
-
     logger.dumpLog()
+
+    val errors = logger.dump()
+    println("Errors: $errors")
 }
 
-fun processApiErrors(apiExceptionLogger: ErrorLogger<ApiException>) {
+fun processApiErrors(apiExceptionLogger: ErrorLogger<in ApiException>) {
     apiExceptionLogger.log(Success("Success"))
     Thread.sleep(100)
     apiExceptionLogger.log(Success(Circle))
@@ -54,6 +56,9 @@ fun processApiErrors(apiExceptionLogger: ErrorLogger<ApiException>) {
     apiExceptionLogger.log(Failure(ApiException.NetworkException))
 
     apiExceptionLogger.dumpLog()
+
+    val errors = apiExceptionLogger.dump()
+    println("Errors: $errors")
 }
 
 fun main() {
